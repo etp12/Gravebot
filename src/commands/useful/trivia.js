@@ -11,11 +11,12 @@ const request = Promise.promisify(_request);
 let answer;
 function trivia(bot, msg, suffix) {
   if (!suffix) {
-    bot.sendMessage(msg.channel, T('imgur_usage', msg.author.lang));
+    bot.sendMessage(msg.channel, T('trivia_usage', msg.author.lang));
     return;
   }
   if(suffix === 'random') {
     // limit=1 will only return 1 gif
+
     const options = {
       url: 'http://jservice.io/api/random',
       json: true
@@ -24,13 +25,13 @@ function trivia(bot, msg, suffix) {
     request(options)
       .then(R.prop('body'))
       .then(body => {
-      //  if () {
+        if (body[0].question) {
           bot.sendMessage(msg.channel, body[0].question);
-          answer = body[0].answer;
+          map[msg.channel] = body[0].answer;
           console.log(body[0].question);
-      //  } else {
-        //  bot.sendMessage(msg.channel, `${T('gif_error', msg.author.lang)}: ${suffix}`);
-      //  }
+        } else {
+          bot.sendMessage(msg.channel, `${T('trivia_error', msg.author.lang)}: ${suffix}`);
+        }
       })
       .catch(err => {
         sentry(err, 'trivia');
@@ -42,7 +43,7 @@ function trivia(bot, msg, suffix) {
     //answer
     const userAnswer = suffix.substr(suffix.indexOf(' ') + 1);
     console.log('user answer: '+userAnswer);
-    if(userAnswer === answer) {
+    if(userAnswer === map[msg.channel]) {
       bot.sendMessage(msg.channel, 'Correct!');
     }
     else {
@@ -50,7 +51,7 @@ function trivia(bot, msg, suffix) {
     }
   }
   else if(suffix.split(' ')[0] === 'giveup') {
-    bot.sendMessage(msg.channel, answer);
+    bot.sendMessage(msg.channel, map[msg.channel]);
   }
 }
 
