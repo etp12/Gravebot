@@ -6,7 +6,7 @@ import R from 'ramda';
 import sentry from '../../sentry';
 import T from '../../translate';
 
-
+let map = {}; //maps server to current question/answer TODO
 const request = Promise.promisify(_request);
 let answer;
 function trivia(bot, msg, suffix) {
@@ -33,15 +33,24 @@ function trivia(bot, msg, suffix) {
       //  }
       })
       .catch(err => {
-        sentry(err, 'gif', 'giphy');
+        sentry(err, 'trivia');
         bot.sendMessage(msg.channel, `Error: ${err.message}`);
       });
   }
 
   else if(suffix.split(' ')[0] === 'answer'){
     //answer
-    const userAnswer = suffix.split(' ')[1];
+    const userAnswer = suffix.substr(suffix.indexOf(' ') + 1);
     console.log('user answer: '+userAnswer);
+    if(userAnswer === answer) {
+      bot.sendMessage(msg.channel, 'Correct!');
+    }
+    else {
+      bot.sendMessage(msg.channel, 'Incorrect');
+    }
+  }
+  else if(suffix.split(' ')[0] === 'giveup') {
+    bot.sendMessage(msg.channel, answer);
   }
 }
 
