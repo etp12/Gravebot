@@ -44,6 +44,7 @@ function trivia(bot, msg, suffix) {
     const userAnswer = suffix.substr(suffix.indexOf(' ') + 1);
     console.log('user answer: '+userAnswer);
     if(userAnswer === map[msg.channel]) {
+      delete map[msg.channel];
       bot.sendMessage(msg.channel, 'Correct!');
     }
     else {
@@ -52,6 +53,7 @@ function trivia(bot, msg, suffix) {
   }
   else if(suffix.split(' ')[0] === 'giveup') {
     bot.sendMessage(msg.channel, map[msg.channel]);
+    delete map[msg.channel];
   }
 }
 
