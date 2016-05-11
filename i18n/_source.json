@@ -359,6 +359,14 @@
     "text": "Yodaifies the sentence",
     "done": true
   },
+  "trivia": {
+    "text": "Asks the channel a trivia question",
+    "done": true
+  },
+  "trivia_usage": {
+    "text": "Usage: **`!trivia`** to ask a question, **`!trivia answer`** `answer` to answer a question, and **`!trivia giveup`** to see the answer.",
+    "done": true
+  },
   "unshorten": {
     "text": "Unshortens a shortened link",
     "done": true

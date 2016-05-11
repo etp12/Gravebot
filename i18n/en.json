@@ -97,6 +97,8 @@
   "translate_leet": "1337ifies the sentence",
   "translate_snoop": "Snoopifies tha sentence",
   "translate_yoda": "Yodaifies the sentence",
+  "trivia": "Asks the channel a trivia question",
+  "trivia_usage": "Usage: **`!trivia`** to ask a question, **`!trivia answer`** `answer` to answer a question, and **`!trivia giveup`** to see the answer.",
   "unshorten": "Unshortens a shortened link",
   "unshorten_usage": "Usage: **`!unshorten`** `url`",
   "uptime": "Shows how long the bot has been online",
